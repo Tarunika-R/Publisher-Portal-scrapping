@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Data in HTML</title>
+    <style>
+        .data-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>JSON Data List</h1>
+    <div id="data-container"></div>
+
+    <script>
+        // Sample JSON data
+        const jsonData = [
+            { "id": 1, "name": "Alice", "age": 25, "city": "New York" },
+            { "id": 2, "name": "Bob", "age": 30, "city": "Los Angeles" },
+            { "id": 3, "name": "Charlie", "age": 35, "city": "Chicago" }
+        ];
+
+        // Reference to the container div
+        const container = document.getElementById('data-container');
+
+        // Function to create a div for each JSON object
+        jsonData.forEach(dataItem => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'data-item';
+            itemDiv.innerHTML = `
+                <p><strong>ID:</strong> ${dataItem.id}</p>
+                <p><strong>Name:</strong> ${dataItem.name}</p>
+                <p><strong>Age:</strong> ${dataItem.age}</p>
+                <p><strong>City:</strong> ${dataItem.city}</p>
+            `;
+            container.appendChild(itemDiv);
+        });
+    </script>
+</body>
+</html>
