@@ -16,7 +16,7 @@ topic_search = topic_search.replace(' ', '+')
 chrome_options = Options()
 
 # Provide the path to the ChromeDriver executable
-service = Service('C:/Users/Hema/Desktop/taru/Publisher Portal/chromedriver.exe')
+service = Service('chromedriver.exe')
 
 # Initialize the Chrome WebDriver with the specified service and options
 browser = webdriver.Chrome(service=service, options=chrome_options)
