@@ -21,7 +21,7 @@ async def main(tab):
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False)
         page = await browser.new_page()
-        await page.goto('http://www.shiksha.com/engineering/ranking/top-engineering-colleges-in-india/44-2-0-0-0' + tab)
+        await page.goto('https://www.shiksha.com/college/government-arts-college-dausa-110155' + tab)
         await scroll_page(page)
         
         content = await page.content()
