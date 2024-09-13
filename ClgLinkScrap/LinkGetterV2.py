@@ -35,7 +35,7 @@ def GenLink(topic_search:str):
 
 DicData = {}
 ErrDic = {}
-with open('Colleges_Dataset.csv', 'r') as fs:
+with open('Colleges_Dataset_last-till4000.csv', 'r') as fs:
     data = fs.readlines()
     for j, i in enumerate(data):
         clean_data = i.strip().replace('"', '')
@@ -44,10 +44,10 @@ with open('Colleges_Dataset.csv', 'r') as fs:
             Urls = GenLink(clean_data)
             DicData[i.replace("\n", "")] = Urls
             print(DicData)
-            with open('DicData.json', 'w') as json_file:
+            with open('DicData_last-till4000.json', 'w') as json_file:
                 json.dump(DicData, json_file, indent=4)
         except:
             print("Error occurred while generating link for", clean_data)
             ErrDic[j] = i
-            with open('ErrDic.json', 'w') as json_file:
+            with open('ErrDic_last-till4000.json', 'w') as json_file:
                 json.dump(ErrDic, json_file, indent=4)
