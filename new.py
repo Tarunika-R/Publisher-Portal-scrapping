@@ -1,6 +1,6 @@
 """
 this code is able to extarct the college's url with ref code 
-but not able to click the 'LOAD MORE COLLEGES option
+but  not able to click the 'LOAD MORE COLLEGES option
 """
 
 from selenium import webdriver
