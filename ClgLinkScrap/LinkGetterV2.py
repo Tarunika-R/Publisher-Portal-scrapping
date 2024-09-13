@@ -4,7 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time, json
 
-# topic_search = input("Enter the topic to search: ")
+# topic_search = input("Enter  the topic to search: ")
 
 def GenLink(topic_search:str):
     topic_search = topic_search.replace(' ', '+')
