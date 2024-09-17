@@ -6,6 +6,7 @@ import time, json
 
 # topic_search = input("Enter  the topic to search: ")
 
+
 def GenLink(topic_search:str):
     topic_search = topic_search.replace(' ', '+')
 
