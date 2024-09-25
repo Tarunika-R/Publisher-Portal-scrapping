@@ -1,0 +1,105 @@
+{
+    "IIT-Madras": {
+        "whats-new": [
+            {
+                "XPath": "//*[@id=\"iulp_lhs_container\"]/div[1]"
+            }
+        ],
+        "about": [
+            {
+                "XPath": "//*[@id=\"ovp_section_highlights\"]"
+            }
+        ],
+        "popular-programs": [
+            {
+                "XPath": "//*[@id=\"ovp_section_popular_courses\"]"
+            }
+        ],
+        "admission-process-imp-dates": [
+            {
+                "XPath": "//*[@id=\"ovp_section_admission_dates\"]"
+            }
+        ],
+        "cutoff": [
+            {
+                "XPath": "//*[@id=\"ovp_section_cutoff\"]"
+            }
+        ],
+        "placements": [
+            {
+                "XPath": "//*[@id=\"ovp_section_placements\"]"
+            }
+        ],
+        "ranking": [
+            {
+                "XPath": "//*[@id=\"ovp_section_rankings\"]"
+            }
+        ],
+        "rating-reviews": [
+            {
+                "XPath": "//*[@id=\"ovp_section_reviews\"]"
+            }
+        ],
+        "iitm-vs-other-clgs": [
+            {
+                "XPath": "//*[@id=\"ovp_section_college_comparison\"]"
+            }
+        ],
+        "std-reviews": [
+            {
+                "XPath": "//*[@id=\"ovp_section_reviews\"]/div[2]"
+            }
+        ],
+        "course-fees": [
+            {
+                "XPath": "//*[@id=\"ovp_section_fees_and_eligibility\"]"
+            }
+        ],
+        "scholarships": [
+            {
+                "XPath": "//*[@id=\"ovp_section_scholarships\"]"
+            }
+        ],
+        "infrastructure": [
+            {
+                "XPath": "//*[@id=\"ovp_section_infrastructure\"]"
+            }
+        ],
+        "faculty": [
+            {
+                "XPath": "//*[@id=\"ovp_section_faculty\"]"
+            }
+        ],
+        "std-life-culture": [
+            {
+                "XPath": "//*[@id=\"ovp_section_others_1\"]"
+            }
+        ],
+        "top-alumni": [
+            {
+                "XPath": "//*[@id=\"ovp_section_notable_alumni\"]"
+            }
+        ],
+        "depts": [
+            {
+                "XPath": "//*[@id=\"ovp_section_affiliated_colleges/departments\"]"
+            }
+        ],
+        "how-to-reach": [
+            {
+                "XPath": "//*[@id=\"ovp_section_others\"]"
+            }
+        ],
+        "faqs": [
+            {
+                "XPath": "//*[@id=\"ovp_section_fAQs\"]"
+            }
+        ],
+        "std-forum": [
+            {
+                "XPath": "//*[@id=\"ana\"]/div/div"
+            }
+        ]
+
+    }
+}
