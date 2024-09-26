@@ -4,10 +4,23 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time, json
 
-# topic_search = input("Enter  the topic to search: ")
 
 
-def GenLink(topic_search:str):
+
+def GenLink(topic_search: str) -> str:
+    """
+    Generates a link for a given topic search.
+
+    Args:
+        topic_search (str): The topic to search for.
+
+    Returns:
+        str: The generated link.
+
+    Example usage:
+        link = GenLink("machine learning")
+        print(link)
+    """
     topic_search = topic_search.replace(' ', '+')
 
     chrome_options = Options()
@@ -16,7 +29,7 @@ def GenLink(topic_search:str):
 
     browser = webdriver.Chrome(service=service, options=chrome_options)
 
-    for i in range(1):  # Adjust the range as needed for multiple pages
+    for i in range(1):  
         url = f"https://www.shiksha.com/search?q={topic_search}&start={i * 10}"
         browser.get(url)
 
@@ -25,9 +38,9 @@ def GenLink(topic_search:str):
         div_elements = browser.find_elements(By.CSS_SELECTOR, 'div.c8ff')
 
         for div in div_elements:
-            # Select the <a> tag inside the <div>
+            
             link = div.find_element(By.TAG_NAME, 'a')
-            # Extract the widget label and URL
+            
             widget_label = link.get_attribute('widgetspecificlabel')
             href_url = link.get_attribute('href')
     time.sleep(10) 
