@@ -21,7 +21,7 @@ driver.get(url)
 try:
     # Wait up to 10 seconds for the menu to become visible
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul"))
+        EC.presence_of_element_located((By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul")) 
     )
 
     # Find the menu items using the correct selector for the navigation menu
