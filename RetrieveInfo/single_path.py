@@ -23,11 +23,11 @@ driver.get(url)
 # Wait for the element to be available before trying to find it
 try:
     # Add an explicit wait for the element to appear (10 seconds max wait)
-    element_present = EC.presence_of_element_located((By.XPATH, '//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/div/div'))
+    element_present = EC.presence_of_element_located((By.XPATH, '//*[@id="ovp_section_highlights"]'))
     WebDriverWait(driver, 10).until(element_present)
 
     # Extract the content from the element using XPath
-    content_element = driver.find_element(By.XPATH, '//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/div/div')
+    content_element = driver.find_element(By.XPATH, '//*[@id="ovp_section_highlights"]')
     content_text = content_element.text
     print(content_text)
 except Exception as e:
