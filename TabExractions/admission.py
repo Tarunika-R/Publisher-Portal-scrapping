@@ -8,43 +8,43 @@ import random
 
 def extract_admission_table(url, verbose=False):
     """
-### 📑 **Function Overview**:
-The `extract_admission_table` function extracts admission-related table data from a specified webpage. It automates the interaction with the webpage by clicking elements (like a "Read More" button) to expand content and scrapes the table data if available. The function includes a loading animation 🌀 and verbose mode for detailed execution feedback.
+### 📑 *Function Overview*:
+The extract_admission_table function extracts admission-related table data from a specified webpage. It automates the interaction with the webpage by clicking elements (like a "Read More" button) to expand content and scrapes the table data if available. The function includes a loading animation 🌀 and verbose mode for detailed execution feedback.
 
-### 🛠️ **Parameters**:
-- **url** *(str)*: The URL of the webpage containing the fees information from which the data is to be extracted 🌍. fo
-- **chrome_driver_path** *(str, optional)*: The file path to the Chrome WebDriver executable. It is used to start the automated browser sessionr web scraping 🖥️.
-  - Default: `"chromedriver.exe"`
-- **verbose** *(bool, optional)*: A flag to enable or disable verbose mode. If `True`, the function prints additional status messages and uses a progress bar during execution 📢.
-  - Default: `False`
+### 🛠 *Parameters*:
+- *url* (str): The URL of the webpage containing the fees information from which the data is to be extracted 🌍. fo
+- *chrome_driver_path* (str, optional): The file path to the Chrome WebDriver executable. It is used to start the automated browser sessionr web scraping 🖥.
+  - Default: "chromedriver.exe"
+- *verbose* (bool, optional): A flag to enable or disable verbose mode. If True, the function prints additional status messages and uses a progress bar during execution 📢.
+  - Default: False
 
-### ⚙️ **How It Works**:
-1. **Initialize WebDriver**:
-   - The function uses Selenium WebDriver to launch a Chrome browser session and open the specified webpage. The browser instance is controlled via the `chrome_driver_path`.
+### ⚙ *How It Works*:
+1. *Initialize WebDriver*:
+   - The function uses Selenium WebDriver to launch a Chrome browser session and open the specified webpage. The browser instance is controlled via the chrome_driver_path.
   
-2. **Click "Read More" Button**:
-   - The function locates the "Read More" button using XPath (`//*[@id="admission_section_overview"]/div[2]/div[2]`) and clicks it to reveal hidden content, such as admission tables.
+2. *Click "Read More" Button*:
+   - The function locates the "Read More" button using XPath (//*[@id="admission_section_overview"]/div[2]/div[2]) and clicks it to reveal hidden content, such as admission tables.
 
-3. **Extract Table Data**:
-   - After expanding the content, the function looks for `<table>` elements within the page's content section.
-   - It iterates through each table, extracting rows (`<tr>`) and columns (`<td>`), storing the text in the `extracted_data` list.
+3. *Extract Table Data*:
+   - After expanding the content, the function looks for <table> elements within the page's content section.
+   - It iterates through each table, extracting rows (<tr>) and columns (<td>), storing the text in the extracted_data list.
 
-4. **Verbose Mode**:
-   - When `verbose=True`, the function provides additional feedback using colored text and shows a progress bar with a spinner to indicate the status of the scraping process.
+4. *Verbose Mode*:
+   - When verbose=True, the function provides additional feedback using colored text and shows a progress bar with a spinner to indicate the status of the scraping process.
 
-5. **Error Handling**:
-   - The function is wrapped in a `try-except` block. In case of any error (e.g., missing elements or webpage issues), it captures the error message and returns it.
+5. *Error Handling*:
+   - The function is wrapped in a try-except block. In case of any error (e.g., missing elements or webpage issues), it captures the error message and returns it.
 
-6. **Close WebDriver**:
+6. *Close WebDriver*:
    - After the extraction process, the WebDriver is closed to free system resources, whether the extraction succeeds or fails.
 
-### 🔄 **Return Value**:
+### 🔄 *Return Value*:
 - The function returns a list of lists representing the table rows and their corresponding column data:
     - Example:
         ['MMS', 'INR 20 lakh', 'NA'], 
         ['PG Diploma', 'INR 10 lakh', 'N/A']
-- If no tables are found, it returns: `"No tables found"`.
-- If an error occurs during execution, the function returns: `"Error: <error_message>"`."""
+- If no tables are found, it returns: "No tables found".
+- If an error occurs during execution, the function returns: "Error: <error_message>"."""
 
     if verbose:
         start_verbose("extract_placement_table", url)
