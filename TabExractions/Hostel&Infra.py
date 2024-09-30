@@ -4,53 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
-url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
-
-def clg_info_top_details(url: str, verbose=False) ->  dict:
-    """
-    ### 📑 **Function Overview**:
-    This function fetches the top details of a college from the provided URL. It includes a loading animation 🌀 and uses colored outputs for enhanced user experience.
-    ### 🛠️ **Parameters**:
-    - **url** *(str)*: The URL of the college webpage from which the information is to be fetched 🌍.
-    - **verbose** *(bool, optional)*: A flag to enable or disable verbose mode. If `True`, additional status messages are printed during execution 📢.
-      - Default: `False`
-
-    ### 🔧 **How it Works**:
-    1. **Loading Animation**: The function shows a loading animation using random spinners and progress bars 🎛️ from pre-defined sets.
-    2. **Scraping Data**: It extracts the relevant college information such as the name, address, and other details using class names 🏷️ from the webpage’s HTML structure.
-    3. **Verbose Mode**: If enabled, the function prints information about the start of the operation and the extracted data 📋.
-    ### 💡 **Usage Example**:
-    ```python
-    # Example of usage with verbose mode enabled
-    college_info = clg_info_top_details("https://example.com/college-page", verbose=True)
-    ```
-    ### ✅ **Return Value**:
-    - **result** *(dict)*: A dictionary containing the extracted data from the webpage in the following structure:
-      ```python
-      {
-        'ClgName': 'Example College Name',
-        'Details_1': ['Detail 1', 'Detail 2', ...],
-        'Details_2': ['Detail A', 'Detail B', ...]
-      }
-      ```
-    """
-    
-    if verbose:
-        start_verbose("clg_info_top_details", url)
-        
-    sleep(0.5, verbose)
-    
-    data_dict = [url, {'ClgName':'e70a13', 'Details_1': 'e9dd86', 'Details_2': 'e1a898'}]
-    result = id_to_content(data_dict)
-
-    if verbose:
-        end_verbose(result)
-
-    return result
-
-
-
 def fetch_college_highlights(url, verbose):
     """
     ### 📑 **Function Overview**:
@@ -100,26 +53,9 @@ def fetch_college_highlights(url, verbose):
 
     try:
         wait = WebDriverWait(driver, 10)
-        
-        try:
-            overlay_close_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "close-popup")))
-            overlay_close_button.click()
-            print("Closed overlay popup")
-        except Exception as e:
-            print("No overlay found:", str(e))
+        sleep(0.2,  verbose, "Waiting for infrastructure page to load")
 
-        read_more = wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/span""")))
-        
-        driver.execute_script("arguments[0].scrollIntoView();", read_more)
-        sleep(1, verbose, "Scrolling to 'Read More' button")
-
-        try:
-            driver.execute_script("arguments[0].click();", read_more)
-            sleep(2, verbose, "Waiting for highlights to load")
-        except Exception as e:
-            print(f"Error clicking 'Read More' with JS: {e}")
-        
-        content_div = driver.find_element(By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/div/div/div""")
+        content_div = driver.find_element(By.XPATH, """//*[@id="InfraWrapper"]""")
 
         tables = content_div.find_elements(By.TAG_NAME, "table")
         table_parents = set()
@@ -164,12 +100,5 @@ def fetch_college_highlights(url, verbose):
     
     return output_data
 
-
-
-
-# Test the function
+url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/infrastructure'
 fetch_college_highlights(url, True)
-
-
-# Don't remove this line 🙂... To Close the driver
-driver.quit()
