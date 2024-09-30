@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def extract_hostel_info(url, verbose):
+def extract_ranking_info(url, verbose):
     """
     ### 📑 **Function Overview**:
     This function scrapes hostel and infrastructure details from a college webpage. It interacts with dynamically loaded content (such as clicking a "Read More" button) to retrieve additional information if present. The function supports verbose mode for detailed status output during execution.
@@ -48,11 +48,11 @@ def extract_hostel_info(url, verbose):
     driver.get(url)
     output_data = {}
     if verbose:
-        start_verbose("IN College Hostel Details fetch", url)
+        start_verbose("IN College Ranking Extraction", url)
 
     try:
         wait = WebDriverWait(driver, 10)
-        sleep(0.2,  verbose, "Waiting for infrastructure page to load")
+        sleep(0.2,  verbose, "Waiting for Ranking page to load")
 
         content_div = driver.find_element(By.XPATH, """//*[@id="rp_section_highlights"]""")
 
@@ -82,9 +82,9 @@ def extract_hostel_info(url, verbose):
                 if not is_inside_table:
                     total_para += paragraph.text + "\n"
 
-            output_data['Highlights'] = total_para if total_para else "Content Not Found :\\"
+            output_data['Ranking_Highlights'] = total_para if total_para else "Content Not Found :\\"
 
-        output_data["Table"] = table_data if table_data else []
+        output_data["Ranking_Table"] = table_data if table_data else []
 
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
         iframe_list = [iframe.get_attribute("src") for iframe in iframes if iframe.get_attribute("src")]
@@ -100,4 +100,4 @@ def extract_hostel_info(url, verbose):
     return output_data
 
 url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/ranking'
-extract_hostel_info(url, True)
+extract_ranking_info(url, True)
