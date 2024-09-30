@@ -13,7 +13,7 @@ def extract_fees_table(url, verbose=False):
     if verbose:
         start_verbose("extract_fees_table", url)
     driver.get(url)
-    sleep(0.5, verbose, "Wait for the page to load")  # Wait for the page to load
+    sleep(0.5, verbose, "Wait for the page to load")
     
     try:
         read_more = driver.find_element(By.XPATH, """//*[@id="fees_section_overview"]/div[2]/div[2]""")
