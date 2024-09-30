@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 import time
 
 # Set the correct path to ChromeDriver
-chrome_driver_path = r"C:/Users/Hema/Documents/taru/PP scrapping/Publisher-Portal-scrapping/chromedriver.exe"
+chrome_driver_path = "chromedriver.exe"
 
 # Initialize Service object
 service = Service(chrome_driver_path)
