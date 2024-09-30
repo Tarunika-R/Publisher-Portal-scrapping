@@ -2,3 +2,5 @@ playwright
 selenium
 langchain
 webdriver-manager
+termcolor 
+tqdm
