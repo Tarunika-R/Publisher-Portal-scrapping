@@ -13,7 +13,7 @@ service = Service(chrome_driver_path)
 driver = webdriver.Chrome(service=service)
 
 # Open the website
-driver.get("https://www.shiksha.com/university/srm-institute-of-science-and-technology-kattankulathur-chennai-24749")
+driver.get("https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031")
 time.sleep(3)  # Wait for the page to load
 
 # Click the "Read More" button
