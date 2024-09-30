@@ -18,7 +18,7 @@ driver = webdriver.Chrome(service=service)
 driver.get("https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/courses")
 
 # Wait for the page to load
-time.sleep(3)
+time.sleep(20)
 
 # Click the "Read More" button
 try:
