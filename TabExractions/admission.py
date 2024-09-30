@@ -6,10 +6,10 @@ from termcolor import colored
 import random
 
 
-def extract_placement_table(url, verbose=False):
+def extract_admission_table(url, verbose=False):
     """
 ### 📑 **Function Overview**:
-The `extract_placement_table` function extracts placement-related table data from a specified webpage. It automates the interaction with the webpage by clicking elements (like a "Read More" button) to expand content and scrapes the table data if available. The function includes a loading animation 🌀 and verbose mode for detailed execution feedback.
+The `extract_admission_table` function extracts admission-related table data from a specified webpage. It automates the interaction with the webpage by clicking elements (like a "Read More" button) to expand content and scrapes the table data if available. The function includes a loading animation 🌀 and verbose mode for detailed execution feedback.
 
 ### 🛠️ **Parameters**:
 - **url** *(str)*: The URL of the webpage containing the fees information from which the data is to be extracted 🌍. fo
@@ -23,7 +23,7 @@ The `extract_placement_table` function extracts placement-related table data fro
    - The function uses Selenium WebDriver to launch a Chrome browser session and open the specified webpage. The browser instance is controlled via the `chrome_driver_path`.
   
 2. **Click "Read More" Button**:
-   - The function locates the "Read More" button using XPath (`//*[@id="placement_section_overview"]/div[2]/div[2]`) and clicks it to reveal hidden content, such as placement tables.
+   - The function locates the "Read More" button using XPath (`//*[@id="admission_section_overview"]/div[2]/div[2]`) and clicks it to reveal hidden content, such as admission tables.
 
 3. **Extract Table Data**:
    - After expanding the content, the function looks for `<table>` elements within the page's content section.
@@ -41,9 +41,8 @@ The `extract_placement_table` function extracts placement-related table data fro
 ### 🔄 **Return Value**:
 - The function returns a list of lists representing the table rows and their corresponding column data:
     - Example:
-        ['Top recruiters', 'JP Morgan Chase, Texas Instruments, Adobe']], 
-        [['No. of offers', '1,491', '1,612'], 
-        ['Companies visited', '480+', '480+']
+        ['MMS', 'INR 20 lakh', 'NA'], 
+        ['PG Diploma', 'INR 10 lakh', 'N/A']
 - If no tables are found, it returns: `"No tables found"`.
 - If an error occurs during execution, the function returns: `"Error: <error_message>"`."""
 
@@ -53,11 +52,11 @@ The `extract_placement_table` function extracts placement-related table data fro
     sleep(0.5, verbose, "Wait for the page to load")
     
     try:
-        # read_more = driver.find_element(By.XPATH, """//*[@id="fees_section_overview"]/div[2]/div[2]""")
-        # read_more.click()
+        read_more = driver.find_element(By.XPATH, """//*[@id="admission_section_admission_process"]/div[2]/div[1]/div/span""")
+        read_more.click()
         
-        content_div = driver.find_element(By.XPATH, """//*[@id="Overview"]/div/div/div/div/div[2]""")
-        
+        content_div = driver.find_element(By.XPATH, """//*[@id="admission_section_admission_process"]/div[2]/div[1]/div/div/div/div""")
+
         tables = content_div.find_elements(By.TAG_NAME, "table")
         extracted_data = [] 
         tables_data = []
@@ -88,9 +87,9 @@ The `extract_placement_table` function extracts placement-related table data fro
 
 
 # Example usage:
-url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/placement'
+url = 'https://www.shiksha.com/college/iim-ahmedabad-indian-institute-of-management-vastrapur-307/admission'
 
-table_data = extract_placement_table(url, verbose=True)
+table_data = extract_admission_table(url, verbose=True)
 # print(table_data)
 
 # Don't remove this line 🙂... To Close the driver
