@@ -55,13 +55,14 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     sleep(0.5, verbose, "Wait for the page to load")
     
     try:
-        read_more = driver.find_element(By.XPATH, """//*[@id="fees_section_overview"]/div[2]/div[2]""")
-        read_more.click()
+        # read_more = driver.find_element(By.XPATH, """//*[@id="fees_section_overview"]/div[2]/div[2]""")
+        # read_more.click()
         
-        content_div = driver.find_element(By.XPATH, """//*[@id="fees_section_overview"]/div[2]""")
+        content_div = driver.find_element(By.XPATH, """//*[@id="Overview"]/div/div/div/div/div[2]""")
         
         tables = content_div.find_elements(By.TAG_NAME, "table")
         extracted_data = [] 
+        tables_data = []
         
         if tables:
             for table in tables:
@@ -71,8 +72,10 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
                     row_data = [col.text for col in cols]
                     if row_data != []:
                         extracted_data.append(row_data) 
+                tables_data.append(extracted_data)
+                extracted_data = []
         
-        result = extracted_data if extracted_data else "No tables found"
+        result = tables_data if tables_data else "No tables found"
     
     except Exception as e:
         result = f"Error: {e}"
@@ -87,7 +90,8 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
 
 
 # Example usage:
-url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
+url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/placement'
+
 table_data = extract_fees_table(url, verbose=True)
 # print(table_data)
 
