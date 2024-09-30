@@ -16,7 +16,7 @@ def clg_info_top_details(url, verbose=False):
     Function to fetch top details of the college with a new loading animation and colored outputs.
     """
     if verbose:
-        print(colored("\nFetching College Info from: ", "blue"), url)
+        print(colored("\n🚀 Fetching College Info from: ", "blue"), url)
 
     with alive_bar(100, spinner=random.choice(Spinner), bar=random.choice(Bar), title=colored("Loading", "green")) as bar:
         for _ in range(5):
@@ -27,7 +27,7 @@ def clg_info_top_details(url, verbose=False):
     result = id_to_content(data_dict)
 
     if verbose:
-        print(colored("Data fetching complete!", "green"))
+        print(colored("Data fetching complete!✨", "green"))
         print(colored(f"Fetched Data : {result}\n", "light_green"))
 
     return result
