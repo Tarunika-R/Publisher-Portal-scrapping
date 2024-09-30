@@ -16,12 +16,30 @@ driver = webdriver.Chrome(options=options)
 
 def id_to_content(data: dict):
     """
-    This function extracts content based on the provided dictionary.
-    The dictionary should contain the URL as the first element and 
-    a mapping of key-value pairs where the value is the class name.
-    <br>
-    Example:
-    Inp_parameter: [url, {'line_1': 'e9dd86', 'line_2': 'e1a898'}]
+    📄 **Function Overview**:
+    This function extracts content based on the provided dictionary. 
+    The dictionary should contain the URL as the first element 🌐 and a mapping of key-value pairs where the value is the class name 🏷️.
+
+    ✨ **How it works**:
+    1. The function navigates to the URL 🌍.
+    2. Extracts data from elements based on the provided class names 🔍.
+    3. Returns the data in a structured format 📦.
+
+    📥 **Input Parameters**:
+    - **url**: The webpage URL from which content needs to be extracted 🔗.
+    - **class name mapping**: A dictionary where keys represent names of the content to extract, and values represent the class names from which content is pulled 🏷️.
+
+    💡 **Example**:
+    ```python
+    [url, {'line_1': 'e9dd86', 'line_2': 'e1a898'}]
+    ```
+    In this example:
+    - `line_1`: The data associated with the class name `e9dd86` will be extracted.
+    - `line_2`: The data associated with the class name `e1a898` will be extracted.
+
+    ✅ **Output**:
+    The function returns a dictionary with the content extracted from the specified class names 📝.
+
     """
     try:
         driver.get(data[0])
