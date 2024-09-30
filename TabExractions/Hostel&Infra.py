@@ -4,52 +4,51 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def extract(url, verbose):
+def extract_hostel_info(url, verbose):
     """
     ### 📑 **Function Overview**:
-    This function scrapes the highlights, tables, and iframe links from a college webpage. It interacts with dynamically loaded content (such as clicking a "Read More" button) to retrieve additional information if present. The function supports verbose mode for detailed status output during execution.
+    This function scrapes hostel and infrastructure details from a college webpage. It interacts with dynamically loaded content (such as clicking a "Read More" button) to retrieve additional information if present. The function supports verbose mode for detailed status output during execution.
 
     ### 🛠️ **Parameters**:
-    - **url** *(str)*: The URL of the college webpage from which the information is to be fetched 🌍.
+    - **url** *(str)*: The URL of the college webpage from which the hostel and infrastructure information is to be fetched 🌍.
     - **verbose** *(bool)*: A flag to enable or disable verbose mode. If `True`, additional status messages are printed during the scraping process 📢.
 
     ### 🔧 **How It Works**:
     1. **Overlay Handling**: The function checks for potential overlay/pop-ups and attempts to close them if present to avoid click obstructions 🚫.
-    2. **Read More Button**: Scrolls the "Read More" button into view and clicks it to reveal hidden content 📄.
+    2. **Read More Button**: Scrolls the "Read More" button into view and clicks it to reveal hidden content, including hostel and infrastructure information 🏢.
     3. **Data Extraction**:
-        - **Tables**: Scrapes table data from the page, excluding empty rows 🗃️.
+        - **Hostel Details**: Scrapes information about hostel facilities, including rooms, fees, and availability 🛏️.
+        - **Infrastructure Details**: Extracts details related to campus infrastructure, such as libraries, labs, sports facilities, and common areas 🏫.
         - **Paragraphs**: Scrapes paragraph content, avoiding paragraphs nested inside tables ✍️.
-        - **Iframes**: Extracts the URLs from all iframe elements present in the content (e.g., embedded YouTube videos) 🎥.
+        - **Iframes**: Extracts the URLs from all iframe elements present in the content (e.g., embedded YouTube videos of hostel tours or infrastructure walkthroughs) 🎥.
     4. **Verbose Mode**: If `verbose=True`, prints additional information such as the start and end of the scraping process and the extracted content 🖥️.
 
     ### ✅ **Return Value**:
-    - **output_data** *(dict)*: A dictionary containing the scraped data:
+    - **output_data** *(dict)*: A dictionary containing the scraped hostel and infrastructure data:
       ```python
       {
-          'Highlights': 'Content from the page...',
-          'Table': [
-              ['Row 1 Col 1', 'Row 1 Col 2', ...],
-              ['Row 2 Col 1', 'Row 2 Col 2', ...]
-          ],
+          'Hostel_Details': 'Information about hostel facilities...',
+          'Infrastructure_Details': 'Details about the campus infrastructure...',
           'Iframes': ['https://www.youtube.com/embed/example1', ...]
       }
       ```
 
     ### 💡 **Usage Example**:
     ```python
-    # Fetch highlights and other data from a college page with verbose output
+    # Fetch hostel and infrastructure details from a college page with verbose output
     url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
-    output_data = fetch_college_highlights(url, verbose=True)
+    output_data = fetch_college_hostel_infrastructure(url, verbose=True)
     
-    # Output will contain highlights, tables, and iframes from the page
+    # Output will contain hostel details, infrastructure details, and iframe links from the page
     print(output_data)
     ```
-    """
+"""
+
     
     driver.get(url)
     output_data = {}
     if verbose:
-        start_verbose("IN College Info fetching highlights", url)
+        start_verbose("IN College Hostel Details fetch", url)
 
     try:
         wait = WebDriverWait(driver, 10)
@@ -101,4 +100,4 @@ def extract(url, verbose):
     return output_data
 
 url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/infrastructure'
-fetch_college_highlights(url, True)
+extract_hostel_info(url, True)
