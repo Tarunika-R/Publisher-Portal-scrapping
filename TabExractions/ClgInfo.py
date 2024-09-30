@@ -1,7 +1,4 @@
-from Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
-from alive_progress import alive_bar
-import time, random
-from termcolor import colored
+from Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, sleep)
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
