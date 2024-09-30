@@ -20,20 +20,20 @@ driver.get("https://www.shiksha.com/college/iit-madras-indian-institute-of-techn
 # Wait for the page to load
 time.sleep(20)
 
-# Click the "Read More" button
 try:
-    # Wait for the "Read More" button to become clickable
+    # Wait for the "View More" button to become clickable and click it
     read_more = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[2]"""))
+        EC.element_to_be_clickable((By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[1]/div"""))
     )
     read_more.click()
     
-    # Wait for the table to be visible after expanding the content
-    table_element = WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[1]/div/table"""))
+    time.sleep(20)
+    # Wait for the table to be updated after clicking "View More"
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[1]/div/table/tbody/tr"""))
     )
-    
-    # Now that the table is visible, extract the table content
+
+    # Now that the expanded content is visible, extract the table content
     tables = driver.find_elements(By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[1]/div/table""")
     
     if tables:
@@ -46,7 +46,7 @@ try:
                 print(row_data)
     else:
         print("No tables found.")
-
+    
 except Exception as e:
     print(f"Error: {e}")
 
