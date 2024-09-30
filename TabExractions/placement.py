@@ -8,64 +8,64 @@ import random
 
 def extract_placement(url, verbose=False):
     """
-### 📑 **Function Overview**:
-The `extract_placement( function extracts fee-related table data from a specified webpage. It automates the interaction with the webpage by clicking elements (like a "Read More" button) to expand content and scrapes the table data if available. The function includes a loading animation 🌀 and verbose mode for detailed execution feedback.
+    ### 📑 *Function Overview*:
+    The extract_placement() function extracts placement-related table data from a specified webpage. It automates the interaction with the webpage by clicking elements (like a "Read More" button) to expand content and scrapes the table data if available. The function includes a loading animation 🌀 and verbose mode for detailed execution feedback.
 
-### 🛠️ **Parameters**:
-- **url** *(str)*: The URL of the webpage containing the fees information from which the data is to be extracted 🌍. fo
-- **chrome_driver_path** *(str, optional)*: The file path to the Chrome WebDriver executable. It is used to start the automated browser sessionr web scraping 🖥️.
-  - Default: `"chromedriver.exe"`
-- **verbose** *(bool, optional)*: A flag to enable or disable verbose mode. If `True`, the function prints additional status messages and uses a progress bar during execution 📢.
-  - Default: `False`
+    ### 🛠 *Parameters*:
+    - *url* (str): The URL of the webpage containing the placement information from which the data is to be extracted 🌍.
+    - *chrome_driver_path* (str, optional): The file path to the Chrome WebDriver executable. It is used to start the automated browser session for web scraping 🖥.
+    - Default: "chromedriver.exe"
+    - *verbose* (bool, optional): A flag to enable or disable verbose mode. If True, the function prints additional status messages and uses a progress bar during execution 📢.
+    - Default: False
 
-### ⚙️ **How It Works**:
-2. **Extract Table Data**:
-   - After expanding the content, the function looks for `<table>` elements within the page's content section.
-   - It iterates through each table, extracting rows (`<tr>`) and columns (`<td>`), storing the text in the `extracted_data` list.
+    ### ⚙ *How It Works*:
+    2. *Extract Table Data*:
+    - After expanding the content, the function looks for <table> elements within the page's content section related to placement data.
+    - It iterates through each table, extracting rows (<tr>) and columns (<td>), storing the text in the extracted_data list.
 
-3. **Verbose Mode**:
-   - When `verbose=True`, the function provides additional feedback using colored text and shows a progress bar with a spinner to indicate the status of the scraping process.
+    3. *Verbose Mode*:
+    - When verbose=True, the function provides additional feedback using colored text and shows a progress bar with a spinner to indicate the status of the scraping process.
 
-4. **Error Handling**:
-   - The function is wrapped in a `try-except` block. In case of any error (e.g., missing elements or webpage issues), it captures the error message and returns it.
+    4. *Error Handling*:
+    - The function is wrapped in a try-except block. In case of any error (e.g., missing elements or webpage issues), it captures the error message and returns it.
 
-5. **Close WebDriver**:
-   - After the extraction process, the WebDriver is closed to free system resources, whether the extraction succeeds or fails.
+    5. *Close WebDriver*:
+    - After the extraction process, the WebDriver is closed to free system resources, whether the extraction succeeds or fails.
 
-### 🔄 **Return Value**:
-    
-    - The function returns a list of lists, with each inner list representing a specific data table or section from the website. 
-      Each list corresponds to rows of data and their respective columns.
-    
-    **Example Return:**
-    [
-        [["College Name", "Location", "Ranking"]],
-        [["IIT Bombay", "Mumbai", "1"]],
-        [["IIT Delhi", "Delhi", "2"]],
-        [["IIT Madras", "Chennai", "3"]],
+    ### 🔄 *Return Value*:
         
-        [["Median Salary", "Highest Salary", "Number of Offers"]],
-        [["INR 15 LPA", "INR 1.5 Crore", "200"]],
-        [["INR 12 LPA", "INR 1.2 Crore", "180"]],
+        - The function returns a list of lists, with each inner list representing a specific data table or section from the website. 
+        Each list corresponds to rows of data and their respective columns.
         
-        [["Popular Recruiters"]],
-        [["Google", "Amazon", "Microsoft"]],
-        [["Accenture", "JP Morgan", "Deloitte"]],
+        *Example Return:*
+        [
+            [["College Name", "Location", "Ranking"]], 
+            [["IIT Bombay", "Mumbai", "1"]], 
+            [["IIT Delhi", "Delhi", "2"]], 
+            [["IIT Madras", "Chennai", "3"]],
+            
+            [["Median Salary", "Highest Salary", "Number of Offers"]],
+            [["INR 15 LPA", "INR 1.5 Crore", "200"]],
+            [["INR 12 LPA", "INR 1.2 Crore", "180"]],
+            
+            [["Popular Recruiters"]],
+            [["Google", "Amazon", "Microsoft"]],
+            [["Accenture", "JP Morgan", "Deloitte"]],
+            
+            [["Placement Statistics"]],
+            [["Number of Offers", "1,000"]],
+            [["Highest Package", "2.5 Crore"]],
+        ]
         
-        [["Programs", "Fees"]],
-        [["MBA", "23,00,000"]],
-        [["MTech", "10,00,000"]],
-        [["PhD", "5,00,000"]],
-    ]
-    
-    - Each list contains table rows and their associated data. For instance, the first list contains college information, followed by placement statistics, popular recruiters, and program fees.
-    - The output format will depend on the website's structure and the data being extracted.
+        - Each list contains table rows and their associated data. For instance, the first list contains college information, followed by placement statistics, popular recruiters, and placement details such as the number of offers or highest packages.
+        - The output format will depend on the website's structure and the data being extracted.
 
-    - **If no tables are found**, it returns:
-    "No tables found"
+        - *If no tables are found*, it returns:
+        "No tables found"
 
-    - **If an error occurs during execution**, the function returns:
-    "Error: <error_message>"
+        - *If an error occurs during execution*, the function returns:
+        "Error: <error_message>"
+        
     """
 
     if verbose:
