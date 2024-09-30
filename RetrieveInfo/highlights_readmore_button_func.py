@@ -1,55 +1,80 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# Set the correct path to ChromeDriver
-chrome_driver_path = "chromedriver.exe"
+def fetch_college_highlights(url, chrome_driver_path="chromedriver.exe"):
+    service = Service(chrome_driver_path)
+    driver = webdriver.Chrome(service=service)
+    driver.get(url)
 
-# Initialize Service object
-service = Service(chrome_driver_path)
+    output_data = {}
 
-# Start the WebDriver using the service object
-driver = webdriver.Chrome(service=service)
+    try:
+        wait = WebDriverWait(driver, 10)
+        read_more = wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/span""")))
+        driver.execute_script("arguments[0].scrollIntoView();", read_more)
+        time.sleep(1)
+        read_more.click()
+        time.sleep(2)
+        content_div = driver.find_element(By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/div/div/div""")
 
-# Open the website
-driver.get("https://www.shiksha.com/university/srm-institute-of-science-and-technology-kattankulathur-chennai-24749")
-time.sleep(3)  # Wait for the page to load
+        tables = content_div.find_elements(By.TAG_NAME, "table")
+        table_parents = set()
+        table_data = []
+        if tables:
+            for table in tables:
+                rows = table.find_elements(By.TAG_NAME, "tr")
+                for row in rows:
+                    cols = row.find_elements(By.TAG_NAME, "td")
+                    row_data = [col.text for col in cols]
+                    if row_data != []:
+                        table_data.append(row_data)
+                table_parents.add(table)
 
-# Click the "Read More" button
-try:
-    read_more = driver.find_element(By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/span""")
-    read_more.click()
-    time.sleep(2)  # Wait for the content to load
+        paragraphs = content_div.find_elements(By.TAG_NAME, "p")
+        total_para = ""
+        if paragraphs:
+            for paragraph in paragraphs:
+                is_inside_table = False
+                for table_parent in table_parents:
+                    if table_parent in paragraph.find_elements(By.XPATH, "./ancestor::*"):
+                        is_inside_table = True
+                        break
 
-    # Try to find both paragraphs and tables in the expanded content
-    content_div = driver.find_element(By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/div/div/div""")
+                if not is_inside_table:
+                    total_para += paragraph.text + "\n"
 
-    # First, check for any paragraphs (<p>) in the div
-    paragraphs = content_div.find_elements(By.TAG_NAME, "p")
-    if paragraphs:
-        print("Extracting paragraph content:")
-        for paragraph in paragraphs:
-            print(paragraph.text)
+            if total_para:
+                output_data['Highlights'] = total_para
+            else:
+                output_data['Highlights'] = "Content Not Found :\\"
+        
+        if len(table_data) > 0:
+            output_data["Table"] = table_data
+        else:
+            output_data["Table"] = []
+
+        # Extract all iframes
+        iframes = driver.find_elements(By.TAG_NAME, "iframe")
+        iframe_list = []
+        if iframes:
+            for iframe in iframes:
+                src = iframe.get_attribute("src")
+                if  src != "":
+                    iframe_list.append(src)
+
+        output_data["Iframes"] = iframe_list
+
+    except Exception as e:
+        print(f"Error: {e}")
     
-    # Next, check for any tables (<table>) in the div
-    tables = content_div.find_elements(By.TAG_NAME, "table")
-    if tables:
-        print("\nExtracting table content:")
-        for table in tables:
-            rows = table.find_elements(By.TAG_NAME, "tr")
-            for row in rows:
-                cols = row.find_elements(By.TAG_NAME, "td")
-                row_data = [col.text for col in cols]
-                print(row_data)
+    driver.quit()
+    return output_data
 
-    # If neither paragraphs nor tables are found, extract plain text from the div
-    if not paragraphs and not tables:
-        print("Extracting plain text content:")
-        print(content_div.text)
-
-except Exception as e:
-    print(f"Error: {e}")
-
-# Close the browser
-driver.quit()
+# Example usage
+url = "https://www.shiksha.com/university/srm-institute-of-science-and-technology-kattankulathur-chennai-24749"
+output = fetch_college_highlights(url)
+print(output)
