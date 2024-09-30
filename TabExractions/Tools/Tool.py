@@ -3,12 +3,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from termcolor import colored
+
+# Design Variables
+Spinner = ['classic', 'stars', 'twirl', 'twirls', 'horizontal', 'vertical', 'waves', 'waves2', 'waves3', 'dots', 'dots_waves', 'dots_waves2', 'it', 'ball_belt', 'balls_belt', 'triangles', 'brackets', 'bubbles', 'circles', 'squares', 'flowers', 'elements', 'loving', 'notes', 'notes2', 'arrow', 'arrows', 'arrows2', 'arrows_in', 'arrows_out', 'radioactive', 'boat', 'fish', 'fish2', 'fishes', 'crab', 'alive', 'wait', 'wait2', 'wait3', 'wait4', 'pulse']
+Bar = ['smooth', 'classic', 'classic2', 'brackets', 'blocks', 'bubbles', 'solid', 'checks', 'circles', 'squares', 'halloween', 'filling', 'notes', 'ruler', 'ruler2', 'fish', 'scuba']
+
 
 # Set up Chrome options
 options = Options()
-# Uncomment if you want to run in headless mode
-# options.add_argument('--headless')
-
 driver = webdriver.Chrome(options=options)
 
 def id_to_content(data: dict):
@@ -41,4 +44,12 @@ def id_to_content(data: dict):
         return {'msg': f"Error in Scraping: {str(e)}"} 
 
 
+# Design Functions
 
+def start_verbose(function_name, url):
+    print(colored(f"\n🦄 Function: Running '{function_name}()'", "magenta"))
+    print(colored("Fetching College Info from: ", "blue"), colored(url+" ✨", "light_yellow"))
+
+def end_verbose(result):
+    print(colored("🚀 Data fetching complete!", "green"))
+    print(colored(f"📤 Fetched Data : {result}\n", "light_yellow"))
