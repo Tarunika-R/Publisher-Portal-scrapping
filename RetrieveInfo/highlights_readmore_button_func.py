@@ -21,7 +21,6 @@ def fetch_college_highlights(url, chrome_driver_path="chromedriver.exe"):
         time.sleep(2)
         content_div = driver.find_element(By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/div/div/div""")
 
-<<<<<<< HEAD
         tables = content_div.find_elements(By.TAG_NAME, "table")
         table_parents = set()
         table_data = []
@@ -34,11 +33,6 @@ def fetch_college_highlights(url, chrome_driver_path="chromedriver.exe"):
                     if row_data != []:
                         table_data.append(row_data)
                 table_parents.add(table)
-=======
-# Open the website
-driver.get("https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/")
-time.sleep(3)  # Wait for the page to load
->>>>>>> 6f91a692dad0f9bab4763a54331279cb68e51841
 
         paragraphs = content_div.find_elements(By.TAG_NAME, "p")
         total_para = ""
