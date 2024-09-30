@@ -82,9 +82,9 @@ def extract_hostel_info(url, verbose):
                 if not is_inside_table:
                     total_para += paragraph.text + "\n"
 
-            output_data['Highlights'] = total_para if total_para else "Content Not Found :\\"
+            output_data['Infra_Highlights'] = total_para if total_para else "Content Not Found :\\"
 
-        output_data["Table"] = table_data if table_data else []
+        output_data["Infra_Table"] = table_data if table_data else []
 
         iframes = driver.find_elements(By.TAG_NAME, "iframe")
         iframe_list = [iframe.get_attribute("src") for iframe in iframes if iframe.get_attribute("src")]
