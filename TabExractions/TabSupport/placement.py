@@ -106,10 +106,10 @@ def extract_placement(url, verbose=False):
 
 
 # Example usage:
-url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/placement'
+# url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/placement'
 
-table_data = extract_placement(url, verbose=True)
-# print(table_data)
+# table_data = extract_placement(url, verbose=True)
+# # print(table_data)
 
-# Don't remove this line 🙂... To Close the driver
-driver.quit()
+# # Don't remove this line 🙂... To Close the driver
+# driver.quit()

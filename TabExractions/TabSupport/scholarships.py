@@ -84,5 +84,5 @@ def fetch_scholarships(url, verbose):
     
     return output_data
 
-url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/scholarships'
-fetch_scholarships(url, True)
+# url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/scholarships'
+# fetch_scholarships(url, True)

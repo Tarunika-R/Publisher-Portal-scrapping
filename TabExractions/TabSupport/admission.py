@@ -86,11 +86,11 @@ The extract_admission_table function extracts admission-related table data from 
     return result
 
 
-# Example usage:
-url = 'https://www.shiksha.com/college/iim-ahmedabad-indian-institute-of-management-vastrapur-307/admission'
+    # # `Example usage:
+    # url = 'https://www.shiksha.com/college/iim-ahmedabad-indian-institute-of-management-vastrapur-307/admission'
 
-table_data = extract_admission_table(url, verbose=True)
-# print(table_data)
+    # table_data = extract_admission_table(url, verbose=True)
+    # # print(table_data)
 
-# Don't remove this line 🙂... To Close the driver
-driver.quit()
+    # # Don't remove this line 🙂... To Close the driver
+    # driver.quit()`

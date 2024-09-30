@@ -99,5 +99,5 @@ def extract_ranking_info(url, verbose):
     
     return output_data
 
-url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/ranking'
-extract_ranking_info(url, True)
+# url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/ranking'
+# extract_ranking_info(url, True)

@@ -86,10 +86,10 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     return result
 
 
-# Example usage:
-url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
-table_data = extract_fees_table(url, verbose=True)
-# print(table_data)
+# # Example usage:
+# url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
+# table_data = extract_fees_table(url, verbose=True)
+# # print(table_data)
 
-# Don't remove this line 🙂... To Close the driver
-driver.quit()
+# # Don't remove this line 🙂... To Close the driver
+# driver.quit()

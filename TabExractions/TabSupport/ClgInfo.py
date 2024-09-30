@@ -168,8 +168,8 @@ def fetch_college_highlights(url, verbose):
 
 
 # Test the function
-fetch_college_highlights(url, True)
+# fetch_college_highlights(url, True)
 
 
-# Don't remove this line 🙂... To Close the driver
-driver.quit()
+# # Don't remove this line 🙂... To Close the driver
+# driver.quit()

@@ -98,7 +98,7 @@ def start_verbose(function_name, url):
     print(colored("Fetching College Info from: ", "blue"), colored(url+" ✨", "light_yellow"))
 
 
-def fetch_menu_tabs(url: str) -> list:
+def fetch_menu_tabs(url: str, verbose=False) -> list:
     """
     📑 **Function Overview**:
     This function navigates to the provided URL and fetches the tab menu items present on the webpage.
@@ -125,6 +125,10 @@ def fetch_menu_tabs(url: str) -> list:
     - The function waits for the tab menu to be present on the page.
     - It then collects all the text from the menu items and returns them as a list.
     """
+    if verbose:
+        start_verbose("fetch_menu_tabs", url)
+        print(colored("Started Tabs Fetching from the given link 📑", 'light_magenta'))
+    
     try:
         driver.get(url)
         tabs = []
@@ -140,6 +144,9 @@ def fetch_menu_tabs(url: str) -> list:
             tabs = item.text.split('\n')
     finally:
         driver.quit()
+    
+    if verbose:
+        end_verbose(tabs)
     return tabs
 
 
