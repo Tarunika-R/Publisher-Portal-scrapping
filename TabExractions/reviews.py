@@ -4,8 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
-import random
-import string
 from selenium.common.exceptions import StaleElementReferenceException
 
 # Set the correct path to ChromeDriver
@@ -23,10 +21,27 @@ driver.get("https://zollege.in/")
 # Wait for the page to load
 time.sleep(3)
 
-def generate_random_string(length=10):
-    """Generate a random string of fixed length."""
-    letters = string.ascii_letters  # Uppercase and lowercase letters
-    return ''.join(random.choice(letters) for i in range(length))
+def get_first_search_result(driver):
+    try:
+        # Locate the search result box using the provided XPath
+        search_result_box = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/header/div/div[2]/div[2]/div/div[2]/div/div'))
+        )
+        
+        # Find all the <a> tags inside the result box
+        a_tags = search_result_box.find_elements(By.TAG_NAME, "a")
+        
+        if a_tags:
+            # Return the first <a> tag (0th index)
+            first_result = a_tags[0]
+            return first_result.get_attribute('href')  # Return the URL from the first <a> tag
+        else:
+            print("No <a> tags found in the search result box.")
+            return None
+
+    except Exception as e:
+        print(f"Error while fetching the search result: {e}")
+        return None
 
 try:
     attempts = 0
@@ -43,10 +58,10 @@ try:
             search_input.click()
             print("Search input field clicked successfully.")
             
-            # Generate random data and fill the input box
-            random_data = "Coimbatore Institute of Technology"  # Generate a random string of 10 characters
-            search_input.send_keys(random_data)
-            print(f"Random data entered into search box: {random_data}")
+            # Input the text you want to search for
+            search_text = "Coimbatore Institute of Technology"  # The search term
+            search_input.send_keys(search_text)
+            print(f"Search term entered: {search_text}")
             break  # If successful, exit the retry loop
 
         except StaleElementReferenceException:
@@ -55,11 +70,23 @@ try:
 
     if attempts == max_attempts:
         print("Failed to interact with the search input field after several attempts.")
-
     
-    time.sleep(10)
+    # Wait for search results to load
+    time.sleep(3)  # Adjust the sleep time based on how long the results take to load
+
+    # Get the URL of the first search result
+    first_url = get_first_search_result(driver)
+
+    if first_url:
+        print(f"First search result URL: {first_url}")
+    else:
+        print("No search result found.")
+
+    # Optionally, add a delay before closing the browser
+    time.sleep(5)
+
 except Exception as e:
     print(f"Error: {e}")
 
 # Close the browser after task completion
-# driver.quit()
+driver.quit()
