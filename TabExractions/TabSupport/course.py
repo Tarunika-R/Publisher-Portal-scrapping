@@ -1,54 +1,35 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# Set the correct path to ChromeDriver
-chrome_driver_path = "chromedriver.exe"
+# Set up WebDriver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-# Initialize Service object
-service = Service(chrome_driver_path)
-
-# Start the WebDriver using the service object
-driver = webdriver.Chrome(service=service)
-
-# Open the website
-driver.get("https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/courses")
+# Open the webpage
+url = "https://www.shiksha.com/college/iim-ahmedabad-indian-institute-of-management-vastrapur-307/courses"
+driver.get(url)
 
 # Wait for the page to load
-time.sleep(20)
+time.sleep(5)
 
+# Scroll into the view of the button before clicking
 try:
-    # Wait for the "View More" button to become clickable and click it
-    read_more = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[1]/div"""))
-    )
-    read_more.click()
-    
-    time.sleep(20)
-    # Wait for the table to be updated after clicking "View More"
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[1]/div/table/tbody/tr"""))
-    )
-
-    # Now that the expanded content is visible, extract the table content
-    tables = driver.find_elements(By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[1]/div/table""")
-    
-    if tables:
-        print("\nExtracting table content:")
-        for table in tables:
-            rows = table.find_elements(By.TAG_NAME, "tr")
-            for row in rows:
-                cols = row.find_elements(By.TAG_NAME, "td")
-                row_data = [col.text for col in cols]
-                print(row_data)
-    else:
-        print("No tables found.")
-    
+    view_more_button = driver.find_element(By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]/div[2]""")
+    driver.execute_script("arguments[0].scrollIntoView(true);", view_more_button)
+    time.sleep(1)  # Wait for scrolling
+    view_more_button.click()
+    time.sleep(3)  # Wait for the content to load
 except Exception as e:
-    print(f"Error: {e}")
+    print("View More button not found or couldn't be clicked:", e)
 
-# Close the browser
+# Extract the content from the expanded section
+try:
+    content = driver.find_element(By.XPATH, """//*[@id="acp_section_fees_and_eligibility"]/div[2]/div[2]""")
+    print(content.text)
+except Exception as e:
+    print("Could not extract content:", e)
+
+# Close the driver
 driver.quit()
