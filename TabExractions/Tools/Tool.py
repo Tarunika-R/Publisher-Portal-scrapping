@@ -96,7 +96,52 @@ def start_verbose(function_name, url):
     """
     print(colored(f"\n🦄 Function: Running '{function_name}()'", "magenta"))
     print(colored("Fetching College Info from: ", "blue"), colored(url+" ✨", "light_yellow"))
-    
+
+
+def fetch_menu_tabs(url: str) -> list:
+    """
+    📑 **Function Overview**:
+    This function navigates to the provided URL and fetches the tab menu items present on the webpage.
+
+    ### 🛠️ **Parameters**:
+    - **url** *(str)*: The URL of the webpage from which the menu tabs are to be fetched.
+
+    ### ✅ **Return**:
+    - **tabs** *(list)*: A list of strings representing the text of each menu tab found on the page.
+
+    ### 💡 **Usage Example**:
+    ```python
+    url = "https://www.shiksha.com/college/shri-shiv-mahavidyalaya-ghazipur-183029"
+    tabs = fetch_menu_tabs(url)
+    print(tabs)
+    ```
+
+    ### 📥 **Return Example**:
+    ```python
+    ['Overview', 'Courses', 'Reviews', 'Admissions', 'Placements', ...]
+    ```
+
+    ### 📝 **Process**:
+    - The function waits for the tab menu to be present on the page.
+    - It then collects all the text from the menu items and returns them as a list.
+    """
+    try:
+        driver.get(url)
+        tabs = []
+        
+        # Wait for the menu to be present on the page
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul"))
+        )
+        
+        # Find the menu items and extract their text
+        menu_items = driver.find_elements(By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul")
+        for item in menu_items:
+            tabs = item.text.split('\n')
+    finally:
+        driver.quit()
+    return tabs
+
 
 
 def end_verbose(result):

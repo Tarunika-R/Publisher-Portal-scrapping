@@ -25,7 +25,7 @@ try:
     menu_items = driver.find_elements(By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul")
 
     for item in menu_items:
-        tabs.append(item.text)
+        tabs = item.text.split('\n')
 finally:
     driver.quit()
     
