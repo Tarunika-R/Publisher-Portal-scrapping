@@ -175,7 +175,7 @@ def sleep(time_duration, verbose=False, msg="🔃 Loading"):
                 time.sleep(time_duration)
                 bar(20) 
     else:
-        time.sleep(time)
+        time.sleep(time_duration)
     
     
             
