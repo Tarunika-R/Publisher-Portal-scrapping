@@ -1,10 +1,15 @@
 from selenium.webdriver.common.by import By
 <<<<<<< HEAD
+<<<<<<< HEAD
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
 from .Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
+=======
+import time
+from Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 =======
 import time
 from Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)

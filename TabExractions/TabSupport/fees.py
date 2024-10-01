@@ -87,11 +87,14 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Example usage:
 url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
 table_data = extract_fees_table(url, verbose=True)
 # print(table_data)
 =======
+=======
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 # # Example usage:
 # url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
 # table_data = extract_fees_table(url, verbose=True)

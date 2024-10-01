@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -188,6 +189,26 @@ clg_info = {}
 fees = {}
 Admissions = {}
 
+=======
+from TabSupport.Tools.Tool import fetch_menu_tabs
+from  TabSupport.ClgInfo import *
+from  TabSupport.fees import *
+from  TabSupport.admission import *
+from  TabSupport.placement import *
+from  TabSupport.ranking import *
+from  TabSupport.HostelAndInfra import *
+from  TabSupport.scholarships import *
+
+
+url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/"
+# ['College Info', 'Courses', 'Fees', 'Reviews', 'Admissions', 'Placements', 'Cut-Offs', 'Rankings', 'Hostel & Campus', 'Scholarships']
+print(fetch_menu_tabs(url, True))
+
+clg_info = {}
+fees = {}
+Admissions = {}
+
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 def collect_clg_content(url, verbose=False):
     for i in fetch_menu_tabs(url, verbose):
         if i is "College Info":
@@ -205,4 +226,7 @@ def collect_clg_content(url, verbose=False):
             fees["extract_placement"] = extract_hostel_info(url, verbose)
         elif i is "Scholarships":
             fees["extract_placement"] = fetch_scholarships(url, verbose)
+<<<<<<< HEAD
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
+=======
 >>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")

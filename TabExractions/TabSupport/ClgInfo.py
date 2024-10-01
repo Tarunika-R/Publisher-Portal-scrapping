@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -12,6 +13,13 @@ from Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, slee
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+=======
+from Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, sleep)
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 
 >>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 
@@ -241,6 +249,10 @@ def fetch_college_highlights(driver, url, verbose=False):
 =======
 # Test the function
 # fetch_college_highlights(url, True)
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 
 >>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 
