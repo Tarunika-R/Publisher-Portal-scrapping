@@ -36,5 +36,3 @@ def getContent(url: str, xpath: str) -> str:
         return text
     except TimeoutException:
         return "Timed out waiting for element"
-    finally:
-        driver.quit()

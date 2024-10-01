@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 import time
-from Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
+from .Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
 from alive_progress import alive_bar
 from termcolor import colored
 import random
@@ -48,10 +48,12 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     ]
 - If no tables are found, it returns: `"No tables found"`.
 - If an error occurs during execution, the function returns: `"Error: <error_message>"`."""
-
+    print(url)
     if verbose:
         start_verbose("extract_fees_table", url)
     driver.get(url)
+    time.sleep(3)
+
     sleep(0.5, verbose, "Wait for the page to load")
     
     try:
@@ -77,8 +79,7 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     except Exception as e:
         result = f"Error: {e}"
     
-    finally:
-        driver.quit()
+    ""
 
     if verbose:
         end_verbose(result)
@@ -86,8 +87,8 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     return result
 
 
-# # Example usage:
-# url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
+# Example usage:
+# url = "https://www.shiksha.com/college/coimbatore-institute-of-technology-19322/fees"
 # table_data = extract_fees_table(url, verbose=True)
 # # print(table_data)
 

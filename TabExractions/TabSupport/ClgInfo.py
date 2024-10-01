@@ -1,8 +1,8 @@
-from Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, sleep)
+from .Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, sleep)
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-
+import time
 
 
 url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
@@ -39,9 +39,11 @@ def clg_info_top_details(url: str, verbose=False) ->  dict:
     if verbose:
         start_verbose("clg_info_top_details", url)
         
-    sleep(0.5, verbose)
+    # sleep(0.5, verbose)
     
     data_dict = [url, {'ClgName':'e70a13', 'Details_1': 'e9dd86', 'Details_2': 'e1a898'}]
+    driver.get(data_dict[0])
+    
     result = id_to_content(data_dict)
 
     if verbose:
@@ -111,11 +113,10 @@ def fetch_college_highlights(url, verbose):
         read_more = wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="ovp_section_highlights"]/div[2]/div[1]/div/span""")))
         
         driver.execute_script("arguments[0].scrollIntoView();", read_more)
-        sleep(1, verbose, "Scrolling to 'Read More' button")
-
+        time.sleep(3)
         try:
             driver.execute_script("arguments[0].click();", read_more)
-            sleep(2, verbose, "Waiting for highlights to load")
+            sleep(0.5, verbose, "Waiting for highlights to load")
         except Exception as e:
             print(f"Error clicking 'Read More' with JS: {e}")
         
@@ -169,7 +170,7 @@ def fetch_college_highlights(url, verbose):
 
 # Test the function
 # fetch_college_highlights(url, True)
-
+# clg_info_top_details(url, True)
 
 # # Don't remove this line 🙂... To Close the driver
 # driver.quit()

@@ -1,6 +1,6 @@
 from selenium.webdriver.common.by import By
 import time
-from Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
+from .Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
 from alive_progress import alive_bar
 from termcolor import colored
 import random
@@ -96,8 +96,7 @@ def extract_placement(url, verbose=False):
     except Exception as e:
         result = f"Error: {e}"
     
-    finally:
-        driver.quit()
+    ""
 
     if verbose:
         end_verbose(result)
