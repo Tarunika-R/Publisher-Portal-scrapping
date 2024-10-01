@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from termcolor import colored
 import random, time
 from alive_progress import alive_bar
-from selenium.common.exceptions import StaleElementReferenceException
 
 
 # Design Variables
@@ -16,7 +15,6 @@ Bar = ['smooth', 'classic', 'classic2', 'brackets', 'blocks', 'bubbles', 'solid'
 
 # Set up Chrome options
 options = Options()
-# options.add_argument('--disable-http2')
 driver = webdriver.Chrome(options=options)
 
 def id_to_content(data: dict):
@@ -47,6 +45,7 @@ def id_to_content(data: dict):
 
     """
     try:
+        driver.get(data[0])
         
         out_data = {} 
 
@@ -143,8 +142,8 @@ def fetch_menu_tabs(url: str, verbose=False) -> list:
         menu_items = driver.find_elements(By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul")
         for item in menu_items:
             tabs = item.text.split('\n')
-    except:
-        pass
+    finally:
+        driver.quit()
     
     if verbose:
         end_verbose(tabs)
@@ -233,77 +232,3 @@ def sleep(time_duration, verbose=False, msg="🔃 Loading"):
     
             
     
-
-def get_first_search_result_url(search_term, verbose):
-    if verbose:
-        start_verbose("get_first_search_result_url", "Search term: "+search_term)
-    try:
-        driver.get("https://zollege.in/")
-
-        time.sleep(3)
-
-        def get_first_search_result(driver):
-            try:
-                search_result_box = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, '//*[@id="__next"]/header/div/div[2]/div[2]/div/div[2]/div/div'))
-                )
-
-                a_tags = search_result_box.find_elements(By.TAG_NAME, "a")
-
-                if a_tags:
-                    first_result = a_tags[0]
-                    if verbose:
-                        end_verbose(first_result.get_attribute('href') )
-                    return first_result.get_attribute('href')  
-                else:
-                    if verbose:
-                        print("❌ No <a> tags found in the search result box.")
-                    return None
-
-            except Exception as e:
-                if verbose:
-                    print(f"❌ Error while fetching the search result: {e}")
-                return None
-
-        attempts = 0
-        max_attempts = 5  
-
-        while attempts < max_attempts:
-            try:
-                search_input = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.CSS_SELECTOR, 'input[placeholder="Search for colleges, Courses, Exams, Q&A or Articles…"]'))
-                )
-
-                search_input.click()
-                if verbose:
-                    print(colored("✅ Search input field clicked successfully.", "green"))
-
-                search_input.send_keys(search_term)
-                if verbose:
-                    print(colored(f"✅ Search term entered: {search_term}" ,"green"))
-                break 
-
-            except StaleElementReferenceException:
-                attempts += 1
-                if verbose:
-                    print(colored(f"🔃 Stale Element Reference Exception. Retrying {attempts}/{max_attempts}...","light_magenta"))
-
-        if attempts == max_attempts:
-            if verbose:
-                print("❌ Failed to interact with the search input field after several attempts.")
-            return None
-
-        time.sleep(3)
-        first_url = get_first_search_result(driver)
-
-        if first_url:
-            return first_url
-        else:
-            if verbose:
-                print("❌ No search result found.")
-            return None
-
-    except Exception as e:
-        if verbose:
-            print(f"❌ Error: {e}")
-        return None

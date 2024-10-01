@@ -48,12 +48,10 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     ]
 - If no tables are found, it returns: `"No tables found"`.
 - If an error occurs during execution, the function returns: `"Error: <error_message>"`."""
-    print(url)
+
     if verbose:
         start_verbose("extract_fees_table", url)
     driver.get(url)
-    time.sleep(3)
-
     sleep(0.5, verbose, "Wait for the page to load")
     
     try:
@@ -79,7 +77,8 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     except Exception as e:
         result = f"Error: {e}"
     
-    ""
+    finally:
+        driver.quit()
 
     if verbose:
         end_verbose(result)
@@ -87,10 +86,17 @@ The `extract_fees_table` function extracts fee-related table data from a specifi
     return result
 
 
+<<<<<<< HEAD
 # Example usage:
 url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
 table_data = extract_fees_table(url, verbose=True)
 # print(table_data)
+=======
+# # Example usage:
+# url = "https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/fees"
+# table_data = extract_fees_table(url, verbose=True)
+# # print(table_data)
+>>>>>>> parent of c3f406f ("Refactored code organization, removed redundant comments, and updated import statements in multiple files.")
 
 # # Don't remove this line 🙂... To Close the driver
 # driver.quit()
