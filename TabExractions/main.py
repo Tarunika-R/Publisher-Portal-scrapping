@@ -1,71 +1,81 @@
-from TabSupport.Tools.Tool import fetch_menu_tabs, driver  # Assuming driver is initialized here
-from TabSupport.ClgInfo import *
-from TabSupport.fees import *
-from TabSupport.admission import *
-from TabSupport.placement import *
-from TabSupport.ranking import *
-from TabSupport.HostelAndInfra import *
-from TabSupport.scholarships import *
-from TabSupport.reviews import *
-import time
-from selenium.common.exceptions import WebDriverException
+# from TabSupport.ClgInfo import init_driver, fetch_college_highlights, clg_info_top_details
 
-college_url = ["https://www.shiksha.com/college/coimbatore-institute-of-technology-19322", "Coimbatore Institute of Technology"]
+# # Example usage
+# url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
 
-def collect_clg_content(url, name, verbose=False):
+# # Initialize the driver
+# driver = init_driver()
+
+# # Fetch college highlights with verbose mode
+# fetch_college_highlights(driver, url, True)  # Pass the driver as the first argument
+
+# # Fetch college top details with verbose mode
+# clg_info_top_details(driver, url, True)  # Pass the driver as the first argument
+
+# # Close the driver after the tasks
+# driver.quit()
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# Initialize WebDriver
+def init_driver():
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
+    driver.maximize_window()
+    return driver
+
+def fetch_menu_tabs(driver, url: str, verbose=False) -> list:
     """
-    This function collects the content of the college from the given url.
-    It uses the fetch_menu_tabs function to get the menu tabs and then uses the respective functions 
-    to collect the content of each tab.
-    url parameter: [url, clg name]
+    📑 **Function Overview**:
+    This function navigates to the provided URL and fetches the tab menu items present on the webpage.
+    ### 🛠️ **Parameters**:
+    - **url** *(str)*: The URL of the webpage from which the menu tabs are to be fetched.
+    - **driver**: The Selenium WebDriver instance that is used to control the browser.
+    ### ✅ **Return**:
+    - **tabs** *(list)*: A list of strings representing the text of each menu tab found on the page.
     """
-    clg_details = {}
-
+    if verbose:
+        print("Started fetching tabs from the given link 📑")
+    
+    tabs = []
+    
     try:
-        tabs = fetch_menu_tabs(url, verbose)  
+        driver.get(url)
+        
+        # Wait for the menu to be present on the page
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul"))
+        )
+        
+        # Find the menu items and extract their text
+        menu_items = driver.find_elements(By.CSS_SELECTOR, "#main-wrapper > div.b876.three_col.uilp.reverse_two_col > div > div > ul li")
+        for item in menu_items:
+            tabs.append(item.text)
+    except Exception as e:
+        print(f"Error fetching menu tabs: {e}")
+    
+    if verbose:
+        print("Fetched tabs:", tabs)
+    
+    return tabs
 
-        if not tabs:
-            print("No tabs found, ensure that fetch_menu_tabs is implemented correctly.")
-            return
-
-        for i in tabs:
-            if i == "College Info1":
-                print(f"Fetching college information for: {name}")
-
-                top = clg_info_top_details(url, verbose)
-                end = fetch_college_highlights(url, verbose)
-
-                clg_details['college_info1'] = [top, end]
-                print("College Info fetched successfully!")
-            elif i == "Fees":
-                clg_details["fees_table"] = extract_fees_table(url+"/fees", verbose)
-            elif i == "Admissions":
-                time.sleep(10)
-                clg_details["admission_table"] = extract_admission_table(url+"/admission", verbose)
-            # elif i == "Placements":
-            #     clg_details["extract_placement"] = extract_placement(url, verbose)
-            # elif i == "Rankings":
-            #     clg_details["extract_ranking"] = extract_ranking_info(url, verbose)
-            # elif i == "Hostel & Campus":
-            #     clg_details["extract_hostel"] = extract_hostel_info(url, verbose)
-            # elif i == "Scholarships":
-            #     clg_details["extract_scholarship"] = fetch_scholarships(url, verbose)
-            # elif i == "Reviews":
-            #     clg_details["extract_review_text"] = extract_review_text(url, verbose)
-            else:
-                print(f"Tab {i} is not handled yet in the current implementation.")
-
-        print(clg_details)
-
-    except WebDriverException as e:
-        print(f"Error encountered: {e}")
-
-    finally:
-        try:
-            driver.quit()
-        except Exception as ex:
-            print(f"Error closing driver: {ex}")
-
-collect_clg_content(college_url[0], college_url[1], True)
-# table_data = extract_fees_table(college_url[0]+"/fees", verbose=True)
-# print(table_data)
+# Example usage
+if __name__ == "__main__":
+    url = 'https://www.shiksha.com/college/shri-shiv-mahavidyalaya-ghazipur-183029'
+    
+    # Initialize the WebDriver
+    driver = init_driver()
+    
+    # Fetch the menu tabs with verbose mode enabled
+    tabs = fetch_menu_tabs(driver, url, verbose=True)
+    
+    # Print the fetched tabs
+    print(tabs)
+    
+    # Close the WebDriver after completion
+    driver.quit()

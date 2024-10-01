@@ -3,9 +3,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
-
-from selenium.webdriver.common.by import By
-import time
 from .Tools.Tool import (id_to_content, driver, start_verbose, end_verbose, Spinner, Bar, sleep)
 from alive_progress import alive_bar
 from termcolor import colored
