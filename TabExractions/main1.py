@@ -9,22 +9,14 @@ import time
 
 # Function to initialize the WebDriver with retry mechanism
 def init_driver():
-    MAX_RETRIES = 3
-    retries = 0
-    while retries < MAX_RETRIES:
-        try:
-            service = Service(ChromeDriverManager().install(), port=0)  # Automatically pick a free port
-            driver = webdriver.Chrome(service=service)
-            driver.maximize_window()
-            print("Driver initialized successfully.")
-            return driver
-        except WebDriverException as e:
-            retries += 1
-            print(f"Error initializing driver, retrying... {retries}/{MAX_RETRIES}")
-            if retries >= MAX_RETRIES:
-                print("Max retries reached. Exiting.")
-                raise e
-            time.sleep(2)  # Wait before retrying
+    chrome_options = webdriver.ChromeOptions()
+    # chrome_options.add_argument('--disable-http2')  # Disable HTTP/2
+    chrome_options.add_argument('--incognito')  # Option to use incognito mode
+    
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver.maximize_window()
+    return driver
 
 # Function to quit the WebDriver
 def quit_driver(driver):
@@ -146,7 +138,45 @@ def clg_info_top_details(driver, data: dict):
 
     return out_data
 
-# Merged Function to fetch both menu tabs and college info
+# Function to fetch scholarship details
+def fetch_scholarships(url, verbose):
+    driver.get(url)
+    output_data = {}
+    if verbose:
+        print("Started fetching scholarship details...")
+
+        try:
+            wait = WebDriverWait(driver, 10)
+            time.sleep(5)
+
+            content_div = driver.find_element(By.XPATH, """//*[@id="Overview"]/div/div/div""")
+
+            tables = content_div.find_elements(By.TAG_NAME, "table")
+            table_parents = set()
+            table_data = []
+            if tables:
+                for table in tables:
+                    rows = table.find_elements(By.TAG_NAME, "tr")
+                    for row in rows:
+                        cols = row.find_elements(By.TAG_NAME, "td")
+                        row_data = [col.text for col in cols]
+                        if row_data:
+                            table_data.append(row_data)
+                    table_parents.add(table)
+
+            output_data["Scolarship_Table"] = table_data if table_data else []
+
+            iframes = driver.find_elements(By.TAG_NAME, "iframe")
+            iframe_list = [iframe.get_attribute("src") for iframe in iframes if iframe.get_attribute("src")]
+
+            output_data["Iframes"] = iframe_list
+
+        except Exception as e:
+            print(f"Error: {e}")
+            
+        return output_data
+
+# Merged Function to fetch both menu tabs, college info, and scholarships
 def fetch_and_scrape_college(driver, url, verbose=False):
     tabs = fetch_menu_tabs(driver, url, verbose)
     for tab in tabs:
@@ -158,10 +188,15 @@ def fetch_and_scrape_college(driver, url, verbose=False):
             data = {"line_1": "e9dd86", "line_2": "e1a898"}  # Sample data for clg_info_top_details
             top_details = clg_info_top_details(driver, data)
             print("College Top Details:", top_details)
+        
+        if tab == "Scholarships":
+            print("Found 'Scholarships' tab, extracting scholarship details...")
+            scholarship_details = fetch_scholarships(url + "/scholarships", verbose)
+            print("Scholarship Details:", scholarship_details)
 
 # Example usage
 if __name__ == "__main__":
-    url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
+    url = 'https://www.shiksha.com/college/iim-ahmedabad-indian-institute-of-management-vastrapur-307'
     driver = init_driver()
 
     try:

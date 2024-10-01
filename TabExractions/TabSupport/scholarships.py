@@ -1,4 +1,4 @@
-from .Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, sleep)
+from Tools.Tool import ( id_to_content, driver, start_verbose, end_verbose, sleep)
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -84,5 +84,5 @@ def fetch_scholarships(url, verbose):
     
     return output_data
 
-# url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/scholarships'
-# fetch_scholarships(url, True)
+url = 'https://www.shiksha.com/college/iit-madras-indian-institute-of-technology-adyar-chennai-3031/scholarships'
+fetch_scholarships(url, True)
