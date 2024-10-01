@@ -36,37 +36,39 @@ def quit_driver(driver):
     except Exception as e:
         print(f"Error quitting driver: {e}")
 
-def clg_info_top_details(driver, url: str, verbose=False) -> dict:
-    if verbose:
-        print("Starting to fetch college top details...")
 
-    try:
-        driver.get(url)
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException
 
-        # Example of extracting college information
-        try:
-            college_name = driver.find_element(By.CLASS_NAME, 'e70a13').text
-            details_1 = [element.text for element in driver.find_elements(By.CLASS_NAME, 'e9dd86')]
-            details_2 = [element.text for element in driver.find_elements(By.CLASS_NAME, 'e1a898')]
+def clg_info_top_details(driver, data: dict):
+        out_data = {}
 
-            result = {
-                'ClgName': college_name,
-                'Details_1': details_1,
-                'Details_2': details_2
-            }
+        # Assuming the 'data' dict is passed from outside, do not overwrite it
+        data = {"line_1": "e9dd86", "line_2": "e1a898"}
 
-            if verbose:
-                print("Fetched details:", result)
+        # Iterating over the correct 'data' dictionary
+        for key, val in data.items():
+            print(f"Locating elements with class: {val}")  # Debugging line
 
-            return result
+            try:
+                elements = WebDriverWait(driver, 40).until(
+                    EC.visibility_of_all_elements_located((By.CLASS_NAME, val))
+                )
+            except TimeoutException:
+                return {'msg': f"Timeout while locating elements with class {val}"}
+            except NoSuchElementException:
+                return {'msg': f"No elements found with class {val}"}
+            except WebDriverException as e:
+                return {'msg': f"Webdriver issue: {str(e)}"}
 
-        except Exception as e:
-            print(f"Error fetching data: {e}")
-            return {}
+            data_id = []
+            for element in elements:
+                data_id.extend(element.text.split("\n"))  # Collect text data
+            out_data[key] = data_id
 
-    except WebDriverException as e:
-        print(f"WebDriver exception occurred: {e}")
-        quit_driver(driver)
+        return out_data
+
+
+
 
 def fetch_college_highlights(driver, url, verbose=False):
     try:
@@ -142,12 +144,12 @@ def fetch_college_highlights(driver, url, verbose=False):
 
 
 # Example usage
-url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
+# url = 'https://www.shiksha.com/college/adina-institute-of-science-and-technology-sagar-60309'
 
-# Initialize the driver with retries
-driver = init_driver()
+# # Initialize the driver with retries
+# driver = init_driver()
 
-# Fetch college highlights with verbose mode
-if driver:
-    fetch_college_highlights(driver, url, True)  # Pass the driver as the first argument
-    quit_driver(driver)  # Ensure driver quits even if everything succeeds
+# # Fetch college highlights with verbose mode
+# if driver:
+#     fetch_college_highlights(driver, url, True)  # Pass the driver as the first argument
+#     quit_driver(driver)  # Ensure driver quits even if everything succeeds
